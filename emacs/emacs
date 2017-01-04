@@ -1,60 +1,26 @@
-(require 'package)
-
-(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages"))
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-
-(setq package-enable-at-startup nil)
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
 (package-initialize)
 
-(defun require-package (package)
-  (setq-default highlight-tabs t)
-  "Install given PACKAGE."
-  (unless (package-installed-p package)
-    (unless (assoc package package-archive-contents)
-      (package-refresh-contents))
-    (package-install package)))
+(require 'cask "~/.cask/cask.el")
+(cask-initialize)
 
-(defun ensure-package-installed (&rest packages)
-  "Assure every package is installed, ask for installation if it’s not.
 
-Return a list of installed packages or nil for every skipped package."
-  (mapcar
-   (lambda (package)
-     (if (package-installed-p package)
-         nil
-       (if (y-or-n-p (format "Package %s is missing. Install it? " package))
-           (package-install package)
-         package)))
-   packages))
-
-;; Make sure to have downloaded archive description.
-(or (file-exists-p package-user-dir)
-    (package-refresh-contents))
-
-;; Activate installed packages
-(package-initialize)
-
-;; Assuming you wish to install "iedit" and "magit"
-(ensure-package-installed 'magit
- 'evil
- 'color-theme-approximate
- 'key-chord
- 'telephone-line
- )
-
-(setq evil-want-C-u-scroll t)
-(require 'evil)
-(evil-mode t)
-(load-theme 'misterioso t)
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+;;(load-theme 'dracula t)
+(require 'color-theme-sanityinc-tomorrow)
+(load-theme 'sanityinc-tomorrow-eighties t)
 
 (require 'telephone-line)
 (setq telephone-line-lhs
         '((evil   . (telephone-line-evil-tag-segment))
           (accent . (telephone-line-vc-segment
                      telephone-line-erc-modified-channels-segment
-                     telephone-line-process-segment))))
+                     telephone-line-process-segment))
+          (nil    . (telephone-line-minor-mode-segment
+                     telephone-line-buffer-segment))))
 (setq telephone-line-rhs
         '((nil    . (telephone-line-misc-info-segment))
           (accent . (telephone-line-major-mode-segment))
@@ -62,6 +28,38 @@ Return a list of installed packages or nil for every skipped package."
 
 (telephone-line-mode t)
 
+;; Projectile, Helm, Dired, Ido Mode ---
+
+(ido-mode 1)
+(ido-everywhere 1)
+(flx-ido-mode 1)
+(setq ido-use-faces nil)
+
+(projectile-global-mode)
+
+
+;; Projectile, Helm Ido Mode ---
+
+
+;; EVILS MODE BEGIN ------------
+(setq evil-want-C-u-scroll t)
+(require 'evil)
+(evil-mode t)
+
+(global-set-key (kbd "M-/") 'evilnc-comment-or-uncomment-lines)
+(global-set-key (kbd "M-e") 'eval-buffer)
+(global-evil-leader-mode)
+(evil-leader/set-leader ",")
+(evil-leader/set-key
+ "," 'switch-to-prev-buffer
+ "b" 'ido-switch-buffer
+ "t" 'helm-projectile
+ "f" 'helm-find-files
+ "ag" 'projectile-ag
+ "c" 'evilnc-comment-or-uncomment-lines
+ "g" 'magit-status
+ "d" 'dired
+)
 
 ;; Bind : to ;
 (define-key evil-normal-state-map (kbd ";") 'evil-ex)
@@ -72,6 +70,124 @@ Return a list of installed packages or nil for every skipped package."
 (key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
 (key-chord-mode 1)
 
+;; evil-magit
+(setq evil-magit-state 'normal)
+(require 'evil-magit)
+
+(require 'dired-x)
+(evil-define-key 'normal dired-mode-map "h" 'dired-up-directory)
+(evil-define-key 'normal dired-mode-map "l" 'dired-find-alternate-file)
+(evil-define-key 'normal dired-mode-map "o" 'dired-sort-toggle-or-edit)
+(evil-define-key 'normal dired-mode-map "v" 'dired-toggle-marks)
+(evil-define-key 'normal dired-mode-map "m" 'dired-mark)
+(evil-define-key 'normal dired-mode-map "u" 'dired-unmark)
+(evil-define-key 'normal dired-mode-map "U" 'dired-unmark-all-marks)
+(evil-define-key 'normal dired-mode-map "c" 'dired-create-directory)
+(evil-define-key 'normal dired-mode-map "n" 'evil-search-next)
+(evil-define-key 'normal dired-mode-map "N" 'evil-search-previous)
+(evil-define-key 'normal dired-mode-map "q" 'kill-this-buffer)
+
+;; EVIL MODE ENDS -----------------
+
+(require 'linum)
+(global-linum-mode 1)
+(setq linum-format " %2d  ")
+
+
+(column-number-mode 1)
+(global-hl-line-mode 1)
+
+(require 'flycheck)
+(add-hook 'after-init-hook #'global-flycheck-mode)
+(setq js2-strict-missing-semi-warning nil)
+(set-face-attribute 'flycheck-error nil
+		    :background "#f2777a"
+		    :foreground "yellow"
+		    )
+(set-face-attribute 'flycheck-warning nil
+		    :background "#f99157"
+		    :foreground "#ffcc66"
+		    )
+
+;; adjust indents for web-mode to 2 spaces
+(defun my-web-mode-hook ()
+  "Hooks for Web mode. Adjust indents"
+  ;;; http://web-mode.org/
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-css-indent-offset 2)
+  (setq web-mode-code-indent-offset 2))
+(add-hook 'web-mode-hook  'my-web-mode-hook)
+
+;; disable json-jsonlist checking for json files
+(setq-default flycheck-disabled-checkers
+  (append flycheck-disabled-checkers
+    '(json-jsonlist)))
+
+;; adjust indents for web-mode to 2 spaces
+(defun my-web-mode-hook ()
+  "Hooks for Web mode. Adjust indents"
+  ;;; http://web-mode.org/
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-css-indent-offset 2)
+  (setq web-mode-code-indent-offset 2))
+(add-hook 'web-mode-hook  'my-web-mode-hook)
+
+(add-hook 'after-init-hook 'global-company-mode)
+
+;; Save cursor position
+(require 'saveplace)
+(setq save-place-file (concat user-emacs-directory "saveplace.el"))
+(setq-default save-place t)
+
+;; Automatic indent
+(electric-indent-mode t)
+
+;; Pair mode
+(electric-pair-mode 1)
+
+(global-git-gutter-mode +1)
+
+;; store all backup and autosave files in the tmp dir
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
+
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 2)
+(setq-default js2-basic-offset 2)
+(setq js-indent-level 2)
+
+;; for better jsx syntax-highlighting in web-mode
+;; - courtesy of Patrick @halbtuerke
+(defadvice web-mode-highlight-part (around tweak-jsx activate)
+  (if (equal web-mode-content-type "jsx")
+    (let ((web-mode-enable-part-face nil))
+      ad-do-it)
+    ad-do-it))
+
+(add-hook 'js2-mode-hook #'rainbow-delimiters-mode)
+
+(eval-after-load 'json-mode
+  '(add-hook 'json-mode-hook
+             (lambda ()
+               (add-hook 'before-save-hook 'web-beautify-js-buffer t t))))
+
+(eval-after-load 'sgml-mode
+  '(add-hook 'html-mode-hook
+             (lambda ()
+               (add-hook 'before-save-hook 'web-beautify-html-buffer t t))))
+
+(eval-after-load 'web-mode
+  '(add-hook 'web-mode-hook
+             (lambda ()
+               (add-hook 'before-save-hook 'web-beautify-html-buffer t t))))
+
+(eval-after-load 'css-mode
+  '(add-hook 'css-mode-hook
+             (lambda ()
+               (add-hook 'before-save-hook 'web-beautify-css-buffer t t))))
+
 (when (window-system)
   (tool-bar-mode -1)
   (scroll-bar-mode -1))
@@ -79,6 +195,11 @@ Return a list of installed packages or nil for every skipped package."
 (when (not (window-system))
   (menu-bar-mode -1))
 
+;; https://github.com/purcell/exec-path-from-shell
+;; only need exec-path-from-shell on OSX
+;; this hopefully sets up path and other vars better
+(when (memq window-system '(mac ns))
+  (exec-path-from-shell-initialize))
 
 (color-theme-approximate-on)
 (custom-set-variables
@@ -86,9 +207,42 @@ Return a list of installed packages or nil for every skipped package."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-faces-vector
+   [default bold shadow italic underline bold bold-italic bold])
+ '(ansi-color-names-vector
+   (vector "#c5c8c6" "#cc6666" "#b5bd68" "#f0c674" "#81a2be" "#b294bb" "#8abeb7" "#373b41"))
+ '(custom-enabled-themes (quote (sanityinc-tomorrow-eighties)))
+ '(custom-safe-themes
+   (quote
+    ("1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "51c957918ee3edf5af2e7acd4ab8a1be17a11d2b4a04edb466164844ae5e190b" "82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" default)))
+ '(fci-rule-color "#373b41")
+ '(js2-basic-offset 2 t)
+ '(js2-bounce-indent-p t)
  '(package-selected-packages
    (quote
-    (telephone-line smart-mode-line-powerline-theme powerline-evil nyan-mode magit key-chord evil-visual-mark-mode color-theme-approximate))))
+    (ag mocha emmet-mode column-marker js2-mode telephone-line smart-mode-line-powerline-theme powerline-evil nyan-mode magit key-chord evil-visual-mark-mode dracula-theme color-theme-approximate)))
+ '(vc-annotate-background nil)
+ '(vc-annotate-color-map
+   (quote
+    ((20 . "#cc6666")
+     (40 . "#de935f")
+     (60 . "#f0c674")
+     (80 . "#b5bd68")
+     (100 . "#8abeb7")
+     (120 . "#81a2be")
+     (140 . "#b294bb")
+     (160 . "#cc6666")
+     (180 . "#de935f")
+     (200 . "#f0c674")
+     (220 . "#b5bd68")
+     (240 . "#8abeb7")
+     (260 . "#81a2be")
+     (280 . "#b294bb")
+     (300 . "#cc6666")
+     (320 . "#de935f")
+     (340 . "#f0c674")
+     (360 . "#b5bd68"))))
+ '(vc-annotate-very-old-color nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
