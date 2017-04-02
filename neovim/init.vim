@@ -41,6 +41,7 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     let g:deoplete#omni#input_patterns = {}
   endif
   autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+Plug 'pbogut/deoplete-elm'
 
 
 Plug 'sheerun/vim-polyglot'
