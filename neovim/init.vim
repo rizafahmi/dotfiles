@@ -72,6 +72,7 @@ Plug 'vim-airline/vim-airline-themes'
   set noshowmode
   set statusline=%=&P\ %f\ %m
   set fillchars=vert:\ ,stl:\ ,stlnc:\ 
+  let g:airline_theme='tomorrow'
 Plug 'tpope/vim-fugitive'
 Plug 'mattn/emmet-vim'
 Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -135,6 +136,7 @@ Plug 'EinfachToll/DidYouMean'
 Plug 'noahfrederick/vim-hemisu'
 Plug 'tpope/vim-eunuch'
 Plug 'kristijanhusak/vim-hybrid-material'
+Plug 'chriskempson/vim-tomorrow-theme'
 call plug#end()
 
 
@@ -146,8 +148,10 @@ set undofile
 set background=dark
 syntax enable
 " colorscheme dracula
-" colorscheme gruvbox
-colorscheme hybrid_material
+colorscheme gruvbox
+" colorscheme hybrid_material
+" colorscheme Tomorrow-Night
+
 hi vertsplit ctermfg=238 ctermbg=235
 hi LineNr ctermfg=237
 hi StatusLine ctermfg=235 ctermbg=245
@@ -172,6 +176,7 @@ set list listchars=tab:»·,trail:·
 
 " Switch between the last two files
 nnoremap <leader><leader> <c-^>
+set autowrite
 
 set pastetoggle=<F2>
 set clipboard=unnamed
