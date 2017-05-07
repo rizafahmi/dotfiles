@@ -1,1 +1,0 @@
-("~/Developers/NodeJS/complete-intro-to-react/" "~/Developers/dotfiles/" "~/Developers/Python/zappa_imgur/src/" "~/.zprezto/" "~/Developers/NodeJS/serverless_blog/themes/cactus-dark/" "~/Developers/ThrowAway/todomvc-plusplus/" "~/Developers/NodeJS/single-page-serverless/")

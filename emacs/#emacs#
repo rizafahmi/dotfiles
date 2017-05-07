@@ -15,7 +15,7 @@
  '(custom-enabled-themes (quote (sanityinc-tomorrow-day)))
  '(custom-safe-themes
    (quote
-    ("d21135150e22e58f8c656ec04530872831baebf5a1c3688030d119c114233c24" "1b27e3b3fce73b72725f3f7f040fd03081b576b1ce8bbdfcb0212920aec190ad" "721bb3cb432bb6be7c58be27d583814e9c56806c06b4077797074b009f322509" "9b1c580339183a8661a84f5864a6c363260c80136bd20ac9f00d7e1d662e936a" "b59d7adea7873d58160d368d42828e7ac670340f11f36f67fa8071dbf957236a" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" default)))
+    ("bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" default)))
  '(fci-rule-color "#515151")
  '(package-selected-packages
    (quote
@@ -58,8 +58,7 @@
 (setq mac-option-modifier 'alt)
 
 ;; Powerline
-(require 'airline-themes)
-;; (powerline-vim-theme)
+(require 'powerline-evil)
+;; (powerline-evil-vim-theme)
 (load-theme 'airline-light)
 
-(set-default-font "Operator Mono 18")
