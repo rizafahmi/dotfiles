@@ -59,7 +59,7 @@ Plug 'neomake/neomake'
   let g:neomake_markdown_enabled_makers = []
   " let g:neomake_javascript_eslint_exe = '/Users/riza/.nvm/versions/node/v6.9.1/bin/eslint_d'
   " sleep 100m
-  let g:neomake_javascript_enabled_makers = ['standard', 'eslint']
+  let g:neomake_javascript_enabled_makers = ['standard']
   let g:neomake_jsx_enabled_makers = ['standard']
   let g:neomake_javascript_standard_exe = '/Users/riza/.nvm/versions/node/v6.9.1/bin/standard'
 
@@ -137,6 +137,11 @@ Plug 'noahfrederick/vim-hemisu'
 Plug 'tpope/vim-eunuch'
 Plug 'kristijanhusak/vim-hybrid-material'
 Plug 'chriskempson/vim-tomorrow-theme'
+Plug 'lifepillar/vim-solarized8'
+" Plug 'altercation/vim-colors-solarized'
+Plug 'reedes/vim-colors-pencil'
+Plug 'reedes/vim-pencil'
+Plug 'ap/vim-css-color'
 call plug#end()
 
 
@@ -149,6 +154,7 @@ set background=dark
 syntax enable
 " colorscheme dracula
 colorscheme gruvbox
+" colorscheme solarized8_light_high
 " colorscheme hybrid_material
 " colorscheme Tomorrow-Night
 
@@ -200,3 +206,4 @@ highlight htmlArg cterm=italic
 " Prettify JavaScript
 " autocmd FileType javascript set formatprg=prettier\ --stdin
 " autocmd BufWritePre *.js exe "normal! gggqG\<C-o>\<C-o>"
+
