@@ -94,7 +94,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'luochen1990/rainbow'
-  let g:rainbow_active = 1
+  let g:rainbow_active = 0
 
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
@@ -128,6 +128,7 @@ Plug 'elmcast/elm-vim'
 
 Plug 'morhetz/gruvbox'
   let g:gruvbox_italic = 1
+  let g:gruvbox_contrast_light = 'hard'
 Plug 'ryanoasis/vim-devicons'
   set guifont=FuraCode\ Nerd\ Font:h22
   let g:airline_powerline_fonts = 1
@@ -138,10 +139,16 @@ Plug 'tpope/vim-eunuch'
 Plug 'kristijanhusak/vim-hybrid-material'
 Plug 'chriskempson/vim-tomorrow-theme'
 Plug 'lifepillar/vim-solarized8'
-" Plug 'altercation/vim-colors-solarized'
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 Plug 'reedes/vim-colors-pencil'
 Plug 'reedes/vim-pencil'
 Plug 'ap/vim-css-color'
+" Plug 'Shougo/vimfiler.vim'
+"   map <leader>e :VimFiler -buffer-name=explorer -split -simple -winwidth=25 -toggle -no-quit<CR>
+"   :let g:vimfiler_as_default_explorer = 1
+" Plug 'Shougo/unite.vim'
+" Plug 'minodisk/nvim-finder', { 'do': ':FinderInstallBinary' }
 call plug#end()
 
 
@@ -154,9 +161,9 @@ set background=dark
 syntax enable
 " colorscheme dracula
 colorscheme gruvbox
-" colorscheme solarized8_light_high
+" colorscheme solarized8_dark_high
 " colorscheme hybrid_material
-" colorscheme Tomorrow-Night
+" colorscheme Tomorrow
 
 hi vertsplit ctermfg=238 ctermbg=235
 hi LineNr ctermfg=237
@@ -166,7 +173,7 @@ hi Search ctermbg=58 ctermfg=15
 hi Default ctermfg=1
 hi clear SignColumn
 hi SignColumn ctermbg=235
-hi EndOfBuffer ctermfg=237 ctermbg=235
+" hi EndOfBuffer ctermfg=237 ctermbg=235
 
 
 set completeopt=longest,menuone,preview
@@ -207,3 +214,32 @@ highlight htmlArg cterm=italic
 " autocmd FileType javascript set formatprg=prettier\ --stdin
 " autocmd BufWritePre *.js exe "normal! gggqG\<C-o>\<C-o>"
 
+
+"Toggles explorer buffer
+function! ToggleVExplorer()
+  if exists("t:expl_buf_num")
+    let expl_win_num = bufwinnr(t:expl_buf_num)
+    if expl_win_num != -1
+      let cur_win_nr = winnr()
+      exec expl_win_num . 'wincmd w'
+      close
+      exec cur_win_nr . 'wincmd w'
+      unlet t:expl_buf_num
+    else
+      unlet t:expl_buf_num
+    endif
+  else
+    exec '1wincmd w'
+    Vexplore
+    let t:expl_buf_num = bufnr("%")
+  endif
+endfunction
+
+"Set default width of explorer to make it appear like a sidebar. Also defaults to tree style.
+let g:netrw_liststyle=3
+let g:netrw_winsize=20
+let g:netrw_banner = 0
+let g:netrw_browse_split = 4
+
+"Lastly, set a key mapping for calling the function above
+noremap <silent> <leader>e :call ToggleVExplorer()<CR>
