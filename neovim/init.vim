@@ -51,8 +51,10 @@ Plug 'sheerun/vim-polyglot'
 " Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'neomake/neomake'
   augroup localneomake
-    autocmd bufwritepost *.js silent !standard --fix -w % > /dev/null
-    autocmd bufwritepost *.jsx silent !standard --fix -w % > /dev/null
+    " autocmd bufwritepost *.js silent !standard --fix -w % > /dev/null
+    " autocmd bufwritepost *.jsx silent !standard --fix -w % > /dev/null
+    autocmd bufwritepost *.js silent !prettier-standard-formatter % > /dev/null
+    autocmd bufwritepost *.jsx silent !prettier-standard-formatter % > /dev/null
     autocmd! BufWritePost * Neomake
   augroup END
   set autoread
@@ -144,11 +146,8 @@ Plug 'lifepillar/vim-solarized8'
 Plug 'reedes/vim-colors-pencil'
 Plug 'reedes/vim-pencil'
 Plug 'ap/vim-css-color'
-" Plug 'Shougo/vimfiler.vim'
-"   map <leader>e :VimFiler -buffer-name=explorer -split -simple -winwidth=25 -toggle -no-quit<CR>
-"   :let g:vimfiler_as_default_explorer = 1
-" Plug 'Shougo/unite.vim'
 " Plug 'minodisk/nvim-finder', { 'do': ':FinderInstallBinary' }
+Plug 'trevordmiller/nova-vim'
 call plug#end()
 
 
@@ -160,10 +159,11 @@ set undofile
 set background=dark
 syntax enable
 " colorscheme dracula
-colorscheme gruvbox
+" colorscheme gruvbox
 " colorscheme solarized8_dark_high
 " colorscheme hybrid_material
 " colorscheme Tomorrow
+colorscheme nova
 
 hi vertsplit ctermfg=238 ctermbg=235
 hi LineNr ctermfg=237
