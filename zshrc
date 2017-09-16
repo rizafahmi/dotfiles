@@ -25,10 +25,6 @@ export PATH=$HOME/.cask/bin:$PATH
 
 
 # Temporary
-export SLACK_TOKEN="xoxb-43194117958-tfhb3JiTVHISVunIztiG0Tx8"
-export GITHUB_SECRET="39e86d52bfa6d9780abf7da65e3e6a55b611e97f"
-export GITHUB_ID="aaeed6ba3b0b3abcd7d4"
-export GITHUB_TOKEN="490d09e61bba39236ee0399ed7909766f74cd19c"
 
 function git_prompt_info() {
   ref=$(git symbolic-ref HEAD 2> /dev/null) || return
@@ -58,7 +54,6 @@ fi
 
 export WORKON_HOME=~/Developers/Python
 source /usr/local/bin/virtualenvwrapper.sh
-export HOMEBREW_GITHUB_API_TOKEN="6fb367a0d22244972d2ee163e295a4f732aa64bf"
 
 
 alias ax10="axel -a -n 10 "
@@ -107,10 +102,6 @@ export TTC_APIKEYS=true
 export TTC_UPDATE_INTERVAL=20
 
 # Twitter api keys
-export TTC_CONSUMER_KEY='HWxeRKyh07umcSxXYZRi7CVwH'
-export TTC_CONSUMER_SECRET='4GMJwISSLhCq4ktqsPNxSeaFiSEl3ORzFoZjSFMMLOo799Xl3h'
-export TTC_ACCESS_TOKEN='289148476-ga8AkvggBJgUvHYy0Iake64SneYyBwXjjBniEFr5'
-export TTC_ACCESS_TOKEN_SECRET='8LfWawRJ7tREctjJ69DYYFkR2B9pDxG8GNB1VY7s5qa8q'
 
 export STUDIO_JDK=/Library/Java/JavaVirtualMachines/jdk1.8.0_77.jdk
 grep -E "^setenv" /etc/launchd.conf | xargs -t -L 1 launchctl
