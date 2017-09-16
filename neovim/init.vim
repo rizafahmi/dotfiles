@@ -51,9 +51,9 @@ Plug 'sheerun/vim-polyglot'
 " Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'neomake/neomake'
   augroup localneomake
-    autocmd bufwritepost *.js silent !prettier-standard-formatter % > /dev/null
-    autocmd bufwritepost *.jsx silent !prettier-standard-formatter % > /dev/null
-    " autocmd! BufWritePost * Neomake
+    " autocmd bufwritepost *.js silent !prettier-standard-formatter % > /dev/null
+    " autocmd bufwritepost *.jsx silent !prettier-standard-formatter % > /dev/null
+    autocmd! BufWritePost * Neomake
   augroup END
   set autoread
   let g:neomake_markdown_enabled_makers = []
@@ -62,6 +62,12 @@ Plug 'neomake/neomake'
   let g:neomake_javascript_enabled_makers = ['standard']
   let g:neomake_jsx_enabled_makers = ['standard']
   let g:neomake_javascript_standard_exe = '/Users/riza/.nvm/versions/node/v8.0.0/bin/standard'
+
+Plug 'skywind3000/asyncrun.vim'
+  augroup localneomake
+    autocmd bufwritepost *.js AsyncRun -post=checktime silent !prettier-standard-formatter % > /dev/null
+    autocmd bufwritepost *.jsx AsyncRun -post=checktime silent !prettier-standard-formatter % > /dev/null
+  augroup END
 
 
 Plug 'tpope/vim-surround'
