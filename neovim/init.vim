@@ -53,7 +53,7 @@ Plug 'neomake/neomake'
   augroup localneomake
     autocmd bufwritepost *.js silent !prettier-standard-formatter % > /dev/null
     autocmd bufwritepost *.jsx silent !prettier-standard-formatter % > /dev/null
-    autocmd! BufWritePost * Neomake
+    " autocmd! BufWritePost * Neomake
   augroup END
   set autoread
   let g:neomake_markdown_enabled_makers = []
@@ -76,25 +76,28 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive'
 Plug 'mattn/emmet-vim'
 Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'ctrlpvim/ctrlp.vim'
+" Plug 'ctrlpvim/ctrlp.vim'
   " let g:ctrlp_cmd = 'CtrlPMixed'
   " let g:ctrlp_working_path_mode = 'ra'
-  let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
-  let g:ctrlp_max_height = 30
-  set wildignore+=*.pyc
-  set wildignore+=*_build/*
-  set wildignore+=*/coverage/*
-  set wildignore+=*/tmp/*
-  set wildignore+=*/node_modules/*
-  map <C-B> :CtrlPBuffer<CR>
-  map <C-P> :CtrlPMixed<CR>
+  " let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+  " let g:ctrlp_max_height = 30
+  " set wildignore+=*.pyc
+  " set wildignore+=*_build/*
+  " set wildignore+=*/coverage/*
+  " set wildignore+=*/tmp/*
+  " set wildignore+=*/node_modules/*
+  " map <C-B> :CtrlPBuffer<CR>
+  " map <C-P> :CtrlPMixed<CR>
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+  map <leader>f :Files<cr>
+  map <C-P> :GFiles<cr>
+  map <C-B> :Buffer<cr>
 Plug 'luochen1990/rainbow'
-  let g:rainbow_active = 0
+  let g:rainbow_active = 1
 
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
@@ -209,36 +212,3 @@ highlight Comment cterm=italic
 highlight htmlArg gui=italic
 highlight htmlArg cterm=italic
 
-" Prettify JavaScript
-" autocmd FileType javascript set formatprg=prettier\ --stdin
-" autocmd BufWritePre *.js exe "normal! gggqG\<C-o>\<C-o>"
-
-
-"Toggles explorer buffer
-function! ToggleVExplorer()
-  if exists("t:expl_buf_num")
-    let expl_win_num = bufwinnr(t:expl_buf_num)
-    if expl_win_num != -1
-      let cur_win_nr = winnr()
-      exec expl_win_num . 'wincmd w'
-      close
-      exec cur_win_nr . 'wincmd w'
-      unlet t:expl_buf_num
-    else
-      unlet t:expl_buf_num
-    endif
-  else
-    exec '1wincmd w'
-    Vexplore
-    let t:expl_buf_num = bufnr("%")
-  endif
-endfunction
-
-"Set default width of explorer to make it appear like a sidebar. Also defaults to tree style.
-let g:netrw_liststyle=3
-let g:netrw_winsize=20
-let g:netrw_banner = 0
-let g:netrw_browse_split = 4
-
-"Lastly, set a key mapping for calling the function above
-noremap <silent> <leader>e :call ToggleVExplorer()<CR>
