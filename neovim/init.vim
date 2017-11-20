@@ -25,10 +25,10 @@ map <CR> :nohl<cr>
 set cursorline
 set cursorcolumn
 
+
 set title
 
 filetype plugin on
-
 call plug#begin('~/.config/nvim/plugged')
 
 Plug 'dracula/vim'
@@ -49,26 +49,12 @@ Plug 'sheerun/vim-polyglot'
   " let g:jsx_ext_required = 0 " Allow JSX in normal JS files
 " Plug 'pangloss/vim-javascript'
 " Plug 'othree/javascript-libraries-syntax.vim'
-Plug 'neomake/neomake'
-  augroup localneomake
-    " autocmd bufwritepost *.js silent !prettier-standard-formatter % > /dev/null
-    " autocmd bufwritepost *.jsx silent !prettier-standard-formatter % > /dev/null
-    autocmd! BufWritePost * Neomake
-  augroup END
-  set autoread
-  let g:neomake_markdown_enabled_makers = []
-  " let g:neomake_javascript_eslint_exe = '/Users/riza/.nvm/versions/node/v6.9.1/bin/eslint_d'
-  " sleep 100m
-  let g:neomake_javascript_enabled_makers = ['standard']
-  let g:neomake_jsx_enabled_makers = ['standard']
-  let g:neomake_javascript_standard_exe = '/Users/riza/.nvm/versions/node/v8.0.0/bin/standard'
 
-Plug 'skywind3000/asyncrun.vim'
-  augroup localneomake
-    autocmd bufwritepost *.js AsyncRun -post=checktime silent !prettier-standard-formatter % > /dev/null
-    autocmd bufwritepost *.jsx AsyncRun -post=checktime silent !prettier-standard-formatter % > /dev/null
-  augroup END
-
+" Plug 'skywind3000/asyncrun.vim'
+"   augroup localneomake
+"     autocmd bufwritepost *.js AsyncRun -post=checktime silent !prettier-standard-formatter % > /dev/null
+"     autocmd bufwritepost *.jsx AsyncRun -post=checktime silent !prettier-standard-formatter % > /dev/null
+"   augroup END
 
 Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
@@ -82,18 +68,6 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive'
 Plug 'mattn/emmet-vim'
 Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
-" Plug 'ctrlpvim/ctrlp.vim'
-  " let g:ctrlp_cmd = 'CtrlPMixed'
-  " let g:ctrlp_working_path_mode = 'ra'
-  " let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
-  " let g:ctrlp_max_height = 30
-  " set wildignore+=*.pyc
-  " set wildignore+=*_build/*
-  " set wildignore+=*/coverage/*
-  " set wildignore+=*/tmp/*
-  " set wildignore+=*/node_modules/*
-  " map <C-B> :CtrlPBuffer<CR>
-  " map <C-P> :CtrlPMixed<CR>
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 Plug 'jiangmiao/auto-pairs'
@@ -135,12 +109,12 @@ Plug 'elmcast/elm-vim'
   let g:elm_syntastic_show_warnings = 1
   autocmd Filetype elm setlocal ts=4 sw=4 sts=0 expandtab
 
-Plug 'morhetz/gruvbox'
-  let g:gruvbox_italic = 1
-  let g:gruvbox_contrast_light = 'hard'
-Plug 'ryanoasis/vim-devicons'
-  set guifont=FuraCode\ Nerd\ Font:h22
-  let g:airline_powerline_fonts = 1
+" Plug 'morhetz/gruvbox'
+"   let g:gruvbox_italic = 1
+"   let g:gruvbox_contrast_light = 'hard'
+" Plug 'ryanoasis/vim-devicons'
+"   set guifont=FuraCode\ Nerd\ Font:h22
+"   let g:airline_powerline_fonts = 1
 Plug 'EinfachToll/DidYouMean'
 
 Plug 'noahfrederick/vim-hemisu'
@@ -155,7 +129,22 @@ Plug 'reedes/vim-pencil'
 Plug 'ap/vim-css-color'
 " Plug 'minodisk/nvim-finder', { 'do': ':FinderInstallBinary' }
 Plug 'trevordmiller/nova-vim'
-Plug 'johngrib/vim-game-code-break'
+Plug 'w0rp/ale'
+  let g:ale_sign_error = '●'
+  let g:ale_sign_warning = '.'
+  let g:ale_lint_on_enter = 0
+  let g:ale_fixers = {'javascript': ['prettier_standard'], 'elixir': []}
+  let g:ale_linters = {'javascript': ['standard'], 'elixir': ['dogma']}
+  let g:ale_fix_on_save = 1
+  let g:ale_history_log_output=1
+  autocmd! BufWritePost * ALELint
+  set autoread
+  autocmd BufWritePost *.exs silent :!mix format %
+  autocmd BufWritePost *.ex silent :!mix format %
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'slashmili/alchemist.vim'
+Plug 'easymotion/vim-easymotion'
+  map <Leader>' <Plug>(easymotion-prefix)
 call plug#end()
 
 
@@ -167,9 +156,9 @@ set undofile
 set background=dark
 syntax enable
 " colorscheme dracula
-colorscheme gruvbox
-" colorscheme solarized8_dark_high
-" colorscheme hybrid_material
+" colorscheme gruvbox
+" colorscheme solarized8_light_high
+colorscheme PaperColor
 " colorscheme Tomorrow
 " colorscheme nova
 
@@ -217,4 +206,13 @@ highlight Comment gui=italic
 highlight Comment cterm=italic
 highlight htmlArg gui=italic
 highlight htmlArg cterm=italic
+
+" Show highlighting group for current word
+nmap <C-A-P> :call <SID>SynStack()<CR>
+function! <SID>SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunction
 
