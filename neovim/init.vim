@@ -23,7 +23,7 @@ map <CR> :nohl<cr>
 
 " Cursors
 set cursorline
-set cursorcolumn
+" set cursorcolumn
 
 
 set title
@@ -45,16 +45,6 @@ Plug 'pbogut/deoplete-elm'
 
 
 Plug 'sheerun/vim-polyglot'
-" Plug 'mxw/vim-jsx'
-  " let g:jsx_ext_required = 0 " Allow JSX in normal JS files
-" Plug 'pangloss/vim-javascript'
-" Plug 'othree/javascript-libraries-syntax.vim'
-
-" Plug 'skywind3000/asyncrun.vim'
-"   augroup localneomake
-"     autocmd bufwritepost *.js AsyncRun -post=checktime silent !prettier-standard-formatter % > /dev/null
-"     autocmd bufwritepost *.jsx AsyncRun -post=checktime silent !prettier-standard-formatter % > /dev/null
-"   augroup END
 
 Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
@@ -67,6 +57,11 @@ Plug 'vim-airline/vim-airline-themes'
   let g:airline_theme='tomorrow'
 Plug 'tpope/vim-fugitive'
 Plug 'mattn/emmet-vim'
+  let g:user_emmet_settings = {
+        \  'javascript.jsx' : {
+        \      'extends' : 'jsx',
+        \  },
+        \}
 Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
@@ -109,9 +104,9 @@ Plug 'elmcast/elm-vim'
   let g:elm_syntastic_show_warnings = 1
   autocmd Filetype elm setlocal ts=4 sw=4 sts=0 expandtab
 
-" Plug 'morhetz/gruvbox'
-"   let g:gruvbox_italic = 1
-"   let g:gruvbox_contrast_light = 'hard'
+Plug 'morhetz/gruvbox'
+  let g:gruvbox_italic = 1
+  let g:gruvbox_contrast_light = 'hard'
 " Plug 'ryanoasis/vim-devicons'
 "   set guifont=FuraCode\ Nerd\ Font:h22
 "   let g:airline_powerline_fonts = 1
@@ -132,11 +127,14 @@ Plug 'trevordmiller/nova-vim'
 Plug 'w0rp/ale'
   let g:ale_sign_error = '●'
   let g:ale_sign_warning = '.'
-  let g:ale_lint_on_enter = 0
-  let g:ale_fixers = {'javascript': ['prettier_standard'], 'elixir': []}
-  let g:ale_linters = {'javascript': ['standard'], 'elixir': ['dogma']}
+  let g:ale_sign_column_always = 1
+  let g:ale_lint_on_enter = 1
+  let g:ale_set_highlights = 1
+  let g:ale_fixers = { 'javascript': ['prettier', 'eslint'], 'elixir': [], 'python': ['remove_trailing_lines', 'trim_whitespace', 'autopep8'] }
+  let g:ale_linters = { 'javascript': ['eslint'], 'elixir': ['dogma'], 'python': ['flake8'] }
   let g:ale_fix_on_save = 1
   let g:ale_history_log_output=1
+  let g:ale_javascript_eslint_use_global = 1
   autocmd! BufWritePost * ALELint
   set autoread
   autocmd BufWritePost *.exs silent :!mix format %
@@ -145,6 +143,80 @@ Plug 'NLKNguyen/papercolor-theme'
 Plug 'slashmili/alchemist.vim'
 Plug 'easymotion/vim-easymotion'
   map <Leader>' <Plug>(easymotion-prefix)
+Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'carlitux/deoplete-ternjs', { 'for': ['javascript', 'javascript.jsx'] }
+  " Set bin if you have many instalations
+  let g:deoplete#sources#ternjs#tern_bin = '/usr/local/bin/tern'
+  let g:deoplete#sources#ternjs#timeout = 1
+
+  " Whether to include the types of the completions in the result data. Default: 0
+  let g:deoplete#sources#ternjs#types = 1
+
+  " Whether to include the distance (in scopes for variables, in prototypes for 
+  " properties) between the completions and the origin position in the result 
+  " data. Default: 0
+  let g:deoplete#sources#ternjs#depths = 1
+
+  " Whether to include documentation strings (if found) in the result data.
+  " Default: 0
+  let g:deoplete#sources#ternjs#docs = 0
+
+  " When on, only completions that match the current word at the given point will
+  " be returned. Turn this off to get all results, so that you can filter on the 
+  " client side. Default: 1
+  let g:deoplete#sources#ternjs#filter = 0
+
+  " Whether to use a case-insensitive compare between the current word and 
+  " potential completions. Default 0
+  let g:deoplete#sources#ternjs#case_insensitive = 1
+
+  " When completing a property and no completions are found, Tern will use some 
+  " heuristics to try and return some properties anyway. Set this to 0 to 
+  " turn that off. Default: 1
+  let g:deoplete#sources#ternjs#guess = 0
+
+  " Determines whether the result set will be sorted. Default: 1
+  let g:deoplete#sources#ternjs#sort = 0
+
+  " When disabled, only the text before the given position is considered part of 
+  " the word. When enabled (the default), the whole variable name that the cursor
+  " is on will be included. Default: 1
+  let g:deoplete#sources#ternjs#expand_word_forward = 0
+
+  " Whether to ignore the properties of Object.prototype unless they have been 
+  " spelled out by at least two characters. Default: 1
+  let g:deoplete#sources#ternjs#omit_object_prototype = 0
+
+  " Whether to include JavaScript keywords when completing something that is not 
+  " a property. Default: 0
+  let g:deoplete#sources#ternjs#include_keywords = 1
+
+  " If completions should be returned when inside a literal. Default: 1
+  let g:deoplete#sources#ternjs#in_literal = 0
+
+
+  "Add extra filetypes
+  let g:deoplete#sources#ternjs#filetypes = [
+      \ 'jsx',
+      \ 'javascript.jsx',
+      \ 'vue',
+      \ '...'
+      \ ]
+Plug 'reasonml-editor/vim-reason-plus'
+  let g:LanguageClient_serverCommands = {
+      \ 'reason': ['ocaml-language-server', '--stdio'],
+      \ 'ocaml': ['ocaml-language-server', '--stdio'],
+      \ }
+  nnoremap <silent> gd :call LanguageClient_textDocument_definition()<cr>
+  nnoremap <silent> gf :call LanguageClient_textDocument_formatting()<cr>
+  nnoremap <silent> <cr> :call LanguageClient_textDocument_hover()<cr>
+  autocmd! bufwritepost *.re silent execute "!refmt % --in-place"
+  set autoread
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+Plug 'roxma/nvim-completion-manager'
 call plug#end()
 
 
@@ -158,9 +230,9 @@ syntax enable
 " colorscheme dracula
 " colorscheme gruvbox
 " colorscheme solarized8_light_high
-colorscheme PaperColor
+" colorscheme PaperColor
 " colorscheme Tomorrow
-" colorscheme nova
+colorscheme nova
 
 hi vertsplit ctermfg=238 ctermbg=235
 hi LineNr ctermfg=237
@@ -176,7 +248,10 @@ hi SignColumn ctermbg=235
 set completeopt=longest,menuone,preview
 
 " Automatic reloading .vimrc
-autocmd! bufwritepost *.vim source %
+augroup autosourcing
+  autocmd!
+  autocmd! bufwritepost *.vim source %
+augroup end
 
 " Automatic fixing indentation
 " autocmd! bufwritepost *.js :normal ma gg=G 'a
