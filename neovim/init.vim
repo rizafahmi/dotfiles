@@ -107,9 +107,9 @@ Plug 'elmcast/elm-vim'
 Plug 'morhetz/gruvbox'
   let g:gruvbox_italic = 1
   let g:gruvbox_contrast_light = 'hard'
-" Plug 'ryanoasis/vim-devicons'
-"   set guifont=FuraCode\ Nerd\ Font:h22
-"   let g:airline_powerline_fonts = 1
+Plug 'ryanoasis/vim-devicons'
+  set guifont=FuraCode\ Nerd\ Font:h22
+  let g:airline_powerline_fonts = 1
 Plug 'EinfachToll/DidYouMean'
 
 Plug 'noahfrederick/vim-hemisu'
@@ -228,7 +228,7 @@ set undofile
 set background=dark
 syntax enable
 " colorscheme dracula
-" colorscheme gruvbox
+colorscheme gruvbox
 " colorscheme solarized8_light_high
 " colorscheme PaperColor
 " colorscheme Tomorrow
