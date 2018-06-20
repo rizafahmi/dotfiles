@@ -47,14 +47,14 @@ Plug 'pbogut/deoplete-elm'
 Plug 'sheerun/vim-polyglot'
 
 Plug 'tpope/vim-surround'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-  set laststatus=2
-  let g:airline_powerline_fonts = 1
-  set noshowmode
-  set statusline=%=&P\ %f\ %m
-  set fillchars=vert:\ ,stl:\ ,stlnc:\ 
-  let g:airline_theme='tomorrow'
+" Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
+"   set laststatus=2
+"   let g:airline_powerline_fonts = 1
+"   set noshowmode
+"   set statusline=%=&P\ %f\ %m
+"   set fillchars=vert:\ ,stl:\ ,stlnc:\ 
+"   let g:airline_theme='tomorrow'
 Plug 'tpope/vim-fugitive'
 Plug 'mattn/emmet-vim'
   let g:user_emmet_settings = {
@@ -130,8 +130,8 @@ Plug 'w0rp/ale'
   let g:ale_sign_column_always = 1
   let g:ale_lint_on_enter = 1
   let g:ale_set_highlights = 1
-  let g:ale_fixers = { 'javascript': ['prettier', 'eslint'], 'elixir': [], 'python': ['remove_trailing_lines', 'trim_whitespace', 'autopep8'] }
-  let g:ale_linters = { 'javascript': ['eslint'], 'elixir': ['dogma'], 'python': ['flake8'] }
+  let g:ale_fixers = { 'javascript': ['prettier', 'eslint'], 'elixir': [], 'python': ['remove_trailing_lines', 'trim_whitespace', 'autopep8'], 'reason': ['refmt'] }
+  let g:ale_linters = { 'javascript': ['eslint'], 'elixir': ['dogma'], 'python': ['flake8'], 'reason': ['ols'] }
   let g:ale_fix_on_save = 1
   let g:ale_history_log_output=1
   let g:ale_javascript_eslint_use_global = 1
@@ -146,7 +146,7 @@ Plug 'easymotion/vim-easymotion'
 Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'carlitux/deoplete-ternjs', { 'for': ['javascript', 'javascript.jsx'] }
   " Set bin if you have many instalations
-  let g:deoplete#sources#ternjs#tern_bin = '/usr/local/bin/tern'
+  let g:deoplete#sources#ternjs#tern_bin = '/Users/riza/node_modules/bin/tern'
   let g:deoplete#sources#ternjs#timeout = 1
 
   " Whether to include the types of the completions in the result data. Default: 0
@@ -210,7 +210,7 @@ Plug 'reasonml-editor/vim-reason-plus'
   nnoremap <silent> gd :call LanguageClient_textDocument_definition()<cr>
   nnoremap <silent> gf :call LanguageClient_textDocument_formatting()<cr>
   nnoremap <silent> <cr> :call LanguageClient_textDocument_hover()<cr>
-  autocmd! bufwritepost *.re silent execute "!refmt % --in-place"
+  " autocmd! bufwritepost *.re silent execute "!refmt % --in-place"
   set autoread
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
@@ -232,7 +232,7 @@ colorscheme gruvbox
 " colorscheme solarized8_light_high
 " colorscheme PaperColor
 " colorscheme Tomorrow
-colorscheme nova
+" colorscheme nova
 
 hi vertsplit ctermfg=238 ctermbg=235
 hi LineNr ctermfg=237

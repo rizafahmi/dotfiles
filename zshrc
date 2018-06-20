@@ -50,6 +50,7 @@ fi
 alias ax10="axel -a -n 10 "
 alias ax="axel -a "
 alias ydl="youtube-dl -f mp4 "
+alias ydlpluralsight="youtube-dl -f mp4 -u adhywiranatap@gmail.com -p bWEmv89bU65r "
 alias rm="trash"
 alias v="nvim"
 alias g="git"
@@ -60,5 +61,13 @@ alias rimraf="trash -rf"
 alias npmbr="npm i babel-loader babel-preset-es2015 babel-preset-react -S"
 alias babelrc="echo '{ \'presets\': [\'react\', \'es2016\'] }' >> .babelrc"
 alias wt="webtorrent download "
+alias c="clear"
+alias em="emacs -nw"
+alias ec="emacsclient -c -a emacs --no-wait"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+function t() {
+  # Defaults to 3 levels deep, do more with `t 5` or `t 1`
+  # pass additional args after
+  tree -I '.git|node_modules|bower_components|.DS_Store' --dirsfirst --filelimit 15 -L ${1:-3} -aC $2
+}
