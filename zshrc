@@ -13,10 +13,12 @@ fi
 #  Customize to your needs...
 export TERM=xterm-256color
 export EDITOR=nvim
-export PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
-export PATH=$HOME/node_modules/bin:$PATH
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/Users/riza/Library/Python/2.7/bin:$PATH
+export ANDROID_HOME=/usr/local/share/android-sdk
 export HOSTNAME=hacktiv8-mac
-
+export FBTOKEN=EAADsFkmVrFABAJkrPbdYbMQEY1EKHNkBGbJRwDBOmCs0ZABwJmZBTimiH1eYUbZCSqC8cxZC6Mwr7oFpyVY1MvqiK6WrHoTU2eOea2qRioe7zUqeiu80BzSUa53ATwWKLf9ki2A5yhVYqyqK6flrjZCO8UZBqqYqfd26JLcZAv9dZBjpUcQSZCghO2FOfFGKqOYm1CYHkMo8bvYBr4gmBgCvS
+export AWS_ACCESS_KEY_ID=AKIAJAYLF75GFUSY7PKQ
+export AWS_SECRET_ACCESS=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
 
 
 # Temporary
@@ -50,7 +52,7 @@ fi
 alias ax10="axel -a -n 10 "
 alias ax="axel -a "
 alias ydl="youtube-dl -f mp4 "
-alias ydlpluralsight="youtube-dl -f mp4 -u adhywiranatap@gmail.com -p bWEmv89bU65r "
+alias ydlfem="youtube-dl -f mp4-mid -u rizafahmi@gmail.com -p mcew5s,juDr "
 alias rm="trash"
 alias v="nvim"
 alias g="git"
@@ -62,12 +64,23 @@ alias npmbr="npm i babel-loader babel-preset-es2015 babel-preset-react -S"
 alias babelrc="echo '{ \'presets\': [\'react\', \'es2016\'] }' >> .babelrc"
 alias wt="webtorrent download "
 alias c="clear"
-alias em="emacs -nw"
-alias ec="emacsclient -c -a emacs --no-wait"
+alias cat="bat"
+alias ping="prettyping --nolegend"
+alias preview="fzf --preview 'bat --color \"always\" {}'"
+alias top="sudo htop"
+alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 function t() {
   # Defaults to 3 levels deep, do more with `t 5` or `t 1`
   # pass additional args after
   tree -I '.git|node_modules|bower_components|.DS_Store' --dirsfirst --filelimit 15 -L ${1:-3} -aC $2
+}
+
+function paste() {
+ pbpaste > ${1}
+}
+
+function copy() {
+ cat ${1} | pbcopy
 }
