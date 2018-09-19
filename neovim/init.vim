@@ -1,3 +1,4 @@
+set termguicolors
 set mouse=""
 set encoding=utf-8
 
@@ -9,8 +10,8 @@ set autochdir
 
 map ; :
 set number
-imap jj <Esc>
-cmap jj <c-c>
+imap jk <Esc>
+cmap jk <c-c>
 vmap v <Esc>
 let g:mapleader=','
 
@@ -19,7 +20,6 @@ set hlsearch
 set incsearch
 set ignorecase
 set smartcase
-map <CR> :nohl<cr>
 
 " Cursors
 set cursorline
@@ -130,7 +130,7 @@ Plug 'w0rp/ale'
   let g:ale_sign_column_always = 1
   let g:ale_lint_on_enter = 1
   let g:ale_set_highlights = 1
-  let g:ale_fixers = { 'javascript': ['prettier', 'eslint'], 'elixir': [], 'python': ['remove_trailing_lines', 'trim_whitespace', 'autopep8'], 'reason': ['refmt'] }
+  let g:ale_fixers = { 'javascript': ['prettier'], 'elixir': [], 'python': ['remove_trailing_lines', 'trim_whitespace', 'autopep8'], 'reason': ['refmt'] }
   let g:ale_linters = { 'javascript': ['eslint'], 'elixir': ['dogma'], 'python': ['flake8'], 'reason': ['ols'] }
   let g:ale_fix_on_save = 1
   let g:ale_history_log_output=1
@@ -217,6 +217,7 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ 'do': 'bash install.sh',
     \ }
 Plug 'roxma/nvim-completion-manager'
+Plug 'kenwheeler/glow-in-the-dark-gucci-shark-bites-vim'
 call plug#end()
 
 
@@ -227,8 +228,9 @@ set undofile
 " Theming
 set background=dark
 syntax enable
+colorscheme sharkbites
 " colorscheme dracula
-colorscheme gruvbox
+" colorscheme gruvbox
 " colorscheme solarized8_light_high
 " colorscheme PaperColor
 " colorscheme Tomorrow
@@ -291,3 +293,4 @@ function! <SID>SynStack()
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunction
 
+map <CR> :nohl<cr>
