@@ -1,6 +1,6 @@
 [user]
-    name = Riza Fahmi
-    email = rizafahmi@gmail.com
+	name = Riza Fahmi
+	email = rizafahmi@gmail.com
 [diff]
 [color]
     ui = auto
@@ -45,12 +45,18 @@
 
 [merge]
     tool = vimdiff
+[pager]
+  diff = diff-so-fancy | less --tabs=1,5 -RFX
+  show = diff-so-fancy | less --tabs=1,5 -RFX
 
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
 [mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
 [core]
 	editor = nvim
+	excludesfile = /Users/riza/.gitignore_global
+[commit]
+	template = /Users/riza/.stCommitMsg
